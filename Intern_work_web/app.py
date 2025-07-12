@@ -632,7 +632,7 @@ st.markdown(
 # Typing animation HTML
 
 components.html("""
-<div style="display: flex; justify-content: center; margin-top: 0px; margin-bottom: 0px">
+<div id="typed-text-container" style="display: flex; justify-content: center; margin-top: 0; margin-bottom: 0;">
   <div id="typed-text" style="
       font-family: 'Helvetica Neue', sans-serif;
       font-weight: 700;
@@ -720,15 +720,13 @@ window.onload = typeLetter;
 </script>
 """, height=400)
 
-# Buttons below animation
-cols = st.columns(2)
+# Buttons below animationcols = st.columns(2)
 with cols[0]:
-    if st.button("Apply Now", key="python_apply_wide", use_container_width=True):
-        st.switch_page("pages/1_application.py")
+    if st.button("Apply Now", key="apply", use_container_width=True):
+        st.write("Apply now clicked")
 with cols[1]:
-    if st.button("LMS Login", key="ml_apply_wide", use_container_width=True):
-        st.switch_page("pages/2_lms_portal.py")
-st.markdown("<br>", unsafe_allow_html=True)  # Add some space
+    if st.button("LMS Login", key="login", use_container_width=True):
+        st.write("LMS login clicked")
 
 # Features Section
 st.markdown("<h2 style='display: flex; justify-content: center; text-align: center; margin-top: 20px; color: #fdbb2d;'>Why Choose BrightCore?</h2>", unsafe_allow_html=True)
