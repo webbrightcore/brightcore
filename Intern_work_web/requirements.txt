@@ -1,0 +1,12 @@
+streamlit
+streamlit-lottie
+pandas
+numpy>=1.26.0
+matplotlib
+plotly
+opencv-python-headless
+pyzbar
+qrcode
+nltk
+requests
+firebase-admin
