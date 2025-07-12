@@ -112,6 +112,7 @@ def inject_custom_css():
         header[data-testid="stHeader"], footer[data-testid="stFooter"] {
             display: none !important;
         }
+        
         /* Base Styles */
         body, .stApp {
             background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
@@ -120,10 +121,9 @@ def inject_custom_css():
         }
         
         /* Modern Navbar */
-        .navbar {
+        .navbar-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
             padding: 15px 5%;
             margin: -1rem -1rem 30px -1rem;
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e) !important;
@@ -133,6 +133,13 @@ def inject_custom_css():
             z-index: 1000;
             backdrop-filter: blur(5px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
         
         .navbar-title {
@@ -147,11 +154,18 @@ def inject_custom_css():
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            padding: 10px 0;
+            width: 100%;
+            text-align: center;
         }
         
         .navbar-tabs {
             display: flex;
             gap: 15px;
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
         }
         
         .navbar-tab {
@@ -266,60 +280,60 @@ def inject_custom_css():
         
         /* Buttons */
         .stButton>button {
-    border-radius: 50px;
-    padding: 12px 28px;
-    font-weight: 700;
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    letter-spacing: 0.5px;
-}
-
-.stButton>button:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.stButton>button:active {
-    transform: translateY(0);
-    background: rgba(255, 255, 255, 0.05) !important;
-}
-
-.stButton>button::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.1),
-        transparent
-    );
-    transition: 0.5s;
-}
-
-.stButton>button:hover::after {
-    left: 100%;
-}
-
-/* For gold accent version (optional) */
-.stButton>button.accent {
-    color: #fdbb2d !important;
-    border-color: rgba(253, 187, 45, 0.4);
-}
-
-.stButton>button.accent:hover {
-    background: rgba(253, 187, 45, 0.1) !important;
-}
+            border-radius: 50px;
+            padding: 12px 28px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.08) !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+        
+        .stButton>button:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stButton>button:active {
+            transform: translateY(0);
+            background: rgba(255, 255, 255, 0.05) !important;
+        }
+        
+        .stButton>button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        
+        .stButton>button:hover::after {
+            left: 100%;
+        }
+        
+        /* For gold accent version (optional) */
+        .stButton>button.accent {
+            color: #fdbb2d !important;
+            border-color: rgba(253, 187, 45, 0.4);
+        }
+        
+        .stButton>button.accent:hover {
+            background: rgba(253, 187, 45, 0.1) !important;
+        }
         
         /* Images */
         .feature-img {
@@ -390,17 +404,28 @@ def inject_custom_css():
         
         /* Responsive */
         @media (max-width: 768px) {
-            .navbar {
+            .navbar-container {
+                padding: 10px;
+            }
+            
+            .navbar-content {
                 flex-direction: column;
-                gap: 15px;
-                padding: 15px;
+            }
+            
+            .navbar-title {
+                font-size: 1.8rem;
+                padding: 5px 0;
+                margin-bottom: 10px;
             }
             
             .navbar-tabs {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
+                gap: 8px;
+                margin-top: 5px;
+            }
+            
+            .navbar-tab {
+                padding: 6px 12px;
+                font-size: 0.85rem;
             }
             
             .hero-header {
@@ -418,6 +443,48 @@ def inject_custom_css():
             .feature-img {
                 height: 200px;
             }
+            
+            /* Stack columns on mobile */
+            [data-testid="column"] {
+                width: 100% !important;
+                padding: 0 !important;
+                margin-bottom: 20px;
+            }
+            
+            /* Adjust typing animation container */
+            #typed-text {
+                font-size: 1.5rem;
+                line-height: 1.3;
+                margin-top: -100px;
+            }
+            
+            /* Adjust button sizes */
+            .stButton>button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            /* Adjust testimonial layout */
+            .testimonial-card {
+                margin: 10px 0;
+                padding: 20px;
+            }
+            
+            /* Make sure images don't overflow */
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+            
+            /* Adjust program cards */
+            .custom-card h2 {
+                font-size: 1.5rem;
+            }
+            
+            /* Reduce padding in about section */
+            .hero-section {
+                padding: 20px;
+            }
         }
     </style>
     """, unsafe_allow_html=True)
@@ -426,39 +493,21 @@ inject_custom_css()
 # -------------------------------
 # Navigation Bar
 # -------------------------------
-col1,col2,col3 = st.columns(3)
-with col1:
-    st.markdown(
-    """
-    <h1 style='text-align: center; margin-top: -80px; color: #fdbb2d;'>
-        BrightCore
-    </h1>
-    """,
-    unsafe_allow_html=True
-)
-
-# -------------------------------
-# HOME SECTION
-# -------------------------------
-with col2:
-    st.markdown("""
-    <style>
-        .navbar-tabs {
-            margin-top: -60px;
-        }
-    </style>
+st.markdown("""
+<div class="navbar-container">
+    <div class="navbar-content">
+        <h1 class="navbar-title">BrightCore</h1>
+        <div class="navbar-tabs">
+            <a href="#home" class="navbar-tab active">🏠 Home</a>
+            <a href="#about" class="navbar-tab">ℹ️ About Us</a>
+            <a href="#courses" class="navbar-tab">🎓 Courses</a>
+            <a href="#programs" class="navbar-tab">💼 Programs</a>
+            <a href="#contact" class="navbar-tab">📞 Contact</a>
+        </div>
+    </div>
+</div>
 """, unsafe_allow_html=True)
-    
-    st.markdown("""
-            <div class="navbar-tabs">
-                <a href="#home" class="navbar-tab active">🏠 Home</a>
-                <a href="#about" class="navbar-tab">ℹ️ About Us</a>
-                <a href="#courses" class="navbar-tab">🎓 Courses</a>
-                <a href="#programs" class="navbar-tab">💼 Programs</a>
-                <a href="#contact" class="navbar-tab">📞 Contact</a>
-            </div>
-        """, unsafe_allow_html=True)
-        
+
 st.markdown("""
     <hr style='margin-top: -10px; margin-bottom: 20px;'>
 """, unsafe_allow_html=True)
@@ -476,6 +525,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# [Rest of your existing code remains exactly the same...]
 # Typing animation HTML
 components.html("""
 <div style="display: flex; justify-content: center; margin-top: 0px; margin-bottom: -350px">
@@ -574,14 +624,6 @@ window.onload = typeLetter;
 </script>
 """, height=400)
 
-# # Add two buttons after the typing animation
-# col1, col2 = st.columns(2)
-# with col1:
-#     if st.button("Apply Now - Summer 2024 Intake Open!"):
-#         st.switch_page("pages/1_application.py")
-# with col2:
-#     if st.button("Access LMS Portal"):
-#         st.switch_page("pages/2_lms_portal.py")
 cols = st.columns(2)
 with cols[0]:
     if st.button("Apply Now", key="python_apply_wide", use_container_width=True):
