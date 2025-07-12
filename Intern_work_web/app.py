@@ -515,6 +515,17 @@ def inject_custom_css():
     </style>
     """, unsafe_allow_html=True)
 inject_custom_css()
+st.markdown("""
+<style>
+/* Fix spacing on mobile to prevent button overlap */
+@media (max-width: 768px) {
+    .mobile-button-wrapper {
+        margin-top: 100px;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 # -------------------------------
 # Navigation Bar
@@ -614,21 +625,6 @@ st.markdown(
 
 # [Rest of your existing code remains exactly the same...]
 # Typing animation HTML
-st.markdown("""
-<style>
-/* Mobile-only adjustments */
-@media (max-width: 768px) {
-    #typed-text {
-        margin-bottom: 80px !important;  /* extra space for buttons */
-    }
-
-    .element-container:has(button) {
-        margin-top: 60px !important;  /* pushes buttons down */
-    }
-}
-</style>
-""", unsafe_allow_html=True)
-
 
 components.html("""
 <div style="display: flex; justify-content: center; margin-top: 0px; margin-bottom: -350px">
@@ -726,6 +722,10 @@ function typeLetter() {
 window.onload = typeLetter;
 </script>
 """, height=400)
+
+st.markdown("""
+    <div class="mobile-button-wrapper">
+""", unsafe_allow_html=True)
 
 cols = st.columns(2)
 with cols[0]:
