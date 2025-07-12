@@ -5,6 +5,17 @@ import requests
 from PIL import Image
 from io import BytesIO
 import json
+from fastapi import FastAPI
+from mangum import Mangum
+
+app = FastAPI()
+
+@app.get("/")
+def home():
+    return {"message": "Hello from FastAPI!"}
+
+# Netlify requires this handler
+handler = Mangum(app)
 
 # -------------------------------
 # Page Config
@@ -77,7 +88,7 @@ def get_image(url, fallback_key):
     return FALLBACK_IMAGES[fallback_key]
 
 # -------------------------------
-# Modern CSS Theme with Enhanced Responsiveness
+# Modern CSS Theme
 # -------------------------------
 def inject_custom_css():
     st.markdown("""
@@ -112,7 +123,6 @@ def inject_custom_css():
         header[data-testid="stHeader"], footer[data-testid="stFooter"] {
             display: none !important;
         }
-        
         /* Base Styles */
         body, .stApp {
             background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
@@ -120,7 +130,7 @@ def inject_custom_css():
             font-family: 'Segoe UI', sans-serif;
         }
         
-        /* Modern Navbar - Responsive */
+        /* Modern Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -196,7 +206,7 @@ def inject_custom_css():
             border-radius: 3px;
         }
         
-        /* Hero Section - Responsive */
+        /* Hero Section */
         .hero-section {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -232,7 +242,7 @@ def inject_custom_css():
             margin-bottom: 30px;
         }
         
-        /* Cards - Responsive */
+        /* Cards */
         .custom-card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -265,42 +275,71 @@ def inject_custom_css():
             color: rgba(255,255,255,0.8);
         }
         
-        /* Buttons - Responsive */
+        /* Buttons */
         .stButton>button {
-            border-radius: 50px;
-            padding: 12px 28px;
-            font-weight: 700;
-            background: rgba(255, 255, 255, 0.08) !important;
-            color: white !important;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.5px;
-        }
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+}
+
+.stButton>button:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.stButton>button:active {
+    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.stButton>button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.stButton>button:hover::after {
+    left: 100%;
+}
+
+/* For gold accent version (optional) */
+.stButton>button.accent {
+    color: #fdbb2d !important;
+    border-color: rgba(253, 187, 45, 0.4);
+}
+
+.stButton>button.accent:hover {
+    background: rgba(253, 187, 45, 0.1) !important;
+}
         
-        .stButton>button:hover {
-            background: rgba(255, 255, 255, 0.15) !important;
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .stButton>button:active {
-            transform: translateY(0);
-            background: rgba(255, 255, 255, 0.05) !important;
-        }
-        
-        /* Images - Responsive */
+        /* Images */
         .feature-img {
             border-radius: 16px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
             margin-bottom: 25px;
             width: 100%;
-            height: auto;
-            max-height: 250px;
+            height: 250px;
             object-fit: cover;
         }
         
@@ -308,7 +347,7 @@ def inject_custom_css():
             transform: scale(1.02);
         }
         
-        /* Testimonials - Responsive */
+        /* Testimonials */
         .testimonial-card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -330,7 +369,7 @@ def inject_custom_css():
             color: white;
         }
         
-        /* Feature Cards - Responsive */
+        /* Feature Cards */
         .feature-card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -349,7 +388,7 @@ def inject_custom_css():
             border-color: rgba(255, 255, 255, 0.4);
         }
         
-        /* Stats - Responsive */
+        /* Stats */
         .stats-card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -360,25 +399,7 @@ def inject_custom_css():
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        /* Enhanced Responsive Breakpoints */
-        @media (max-width: 992px) {
-            .hero-header {
-                font-size: 2.8rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 20px;
-            }
-            
-            .feature-img {
-                max-height: 200px;
-            }
-            
-            .stats-card {
-                padding: 20px;
-            }
-        }
-        
+        /* Responsive */
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
@@ -386,29 +407,19 @@ def inject_custom_css():
                 padding: 15px;
             }
             
-            .navbar-title {
-                font-size: 1.8rem;
-            }
-            
             .navbar-tabs {
+                display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 10px;
             }
             
-            .navbar-tab {
-                padding: 6px 15px;
-                font-size: 0.9rem;
-            }
-            
             .hero-header {
-                font-size: 2.2rem;
-                margin-bottom: 15px;
+                font-size: 2.5rem;
             }
             
             .hero-subtitle {
                 font-size: 18px;
-                margin-bottom: 20px;
             }
             
             .custom-card {
@@ -416,79 +427,7 @@ def inject_custom_css():
             }
             
             .feature-img {
-                max-height: 180px;
-            }
-            
-            .feature-card, .testimonial-card {
-                padding: 20px;
-            }
-            
-            .stats-card {
-                width: 100% !important;
-                margin: 10px 0;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero-header {
-                font-size: 1.8rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 16px;
-            }
-            
-            .feature-img {
-                max-height: 150px;
-            }
-            
-            .custom-card h2 {
-                font-size: 1.3rem;
-            }
-            
-            .custom-card p, .custom-card ul {
-                font-size: 0.9rem;
-            }
-            
-            .stButton>button {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-        }
-        
-        /* Mobile-first adjustments */
-        @media (max-width: 480px) {
-            .hero-section {
-                padding: 10px 20px;
-            }
-            
-            .hero-header {
-                font-size: 1.5rem;
-            }
-            
-            .navbar-title {
-                font-size: 1.5rem;
-            }
-            
-            .navbar-tab {
-                padding: 5px 12px;
-                font-size: 0.8rem;
-            }
-            
-            .feature-img {
-                max-height: 120px;
-            }
-            
-            .custom-card {
-                padding: 15px;
-            }
-            
-            .stats-card {
-                padding: 15px;
-            }
-            
-            .stats-card h3 {
-                font-size: 1.8rem;
+                height: 200px;
             }
         }
     </style>
@@ -496,29 +435,59 @@ def inject_custom_css():
 inject_custom_css()
 
 # -------------------------------
-# Navigation Bar - Responsive
+# Navigation Bar
 # -------------------------------
-st.markdown("""
-<div class="navbar">
-    <h1 class="navbar-title">BrightCore</h1>
-    <div class="navbar-tabs">
-        <a href="#home" class="navbar-tab active">🏠 Home</a>
-        <a href="#about" class="navbar-tab">ℹ️ About</a>
-        <a href="#courses" class="navbar-tab">🎓 Courses</a>
-        <a href="#programs" class="navbar-tab">💼 Programs</a>
-        <a href="#contact" class="navbar-tab">📞 Contact</a>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+col1,col2,col3 = st.columns(3)
+with col1:
+    st.markdown(
+    """
+    <h1 style='text-align: center; margin-top: -80px; color: #fdbb2d;'>
+        BrightCore
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
 
+# -------------------------------
+# HOME SECTION
+# -------------------------------
+with col2:
+    st.markdown("""
+    <style>
+        .navbar-tabs {
+            margin-top: -60px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+    
+    st.markdown("""
+            <div class="navbar-tabs">
+                <a href="#home" class="navbar-tab active">🏠 Home</a>
+                <a href="#about" class="navbar-tab">ℹ️ About Us</a>
+                <a href="#courses" class="navbar-tab">🎓 Courses</a>
+                <a href="#programs" class="navbar-tab">💼 Programs</a>
+                <a href="#contact" class="navbar-tab">📞 Contact</a>
+            </div>
+        """, unsafe_allow_html=True)
+        
 st.markdown("""
     <hr style='margin-top: -10px; margin-bottom: 20px;'>
 """, unsafe_allow_html=True)
 
-# -------------------------------
-# HOME SECTION - Responsive
-# -------------------------------
-# Typing animation HTML with responsive sizing
+# Set page background
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #1c1c1c;
+        color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Typing animation HTML
 components.html("""
 <div style="display: flex; justify-content: center; margin-top: 0px; margin-bottom: -350px">
   <div id="typed-text" style="
@@ -537,66 +506,66 @@ components.html("""
 const letters = [
   "“",
   "<br>",
-  "<span class='responsive-text-medium'>Y</span>",
-  "<span class='responsive-text-medium'>O</span>",
-  "<span class='responsive-text-medium'>U</span>",
-  "<span class='responsive-text-medium'>R</span>",
+  "<span style='font-size:28px;'>Y</span>",
+  "<span style='font-size:28px;'>O</span>",
+  "<span style='font-size:28px;'>U</span>",
+  "<span style='font-size:28px;'>R</span>",
   " ",
-  "<span class='responsive-text-medium accent'>F</span>",
-  "<span class='responsive-text-medium accent'>U</span>",
-  "<span class='responsive-text-medium accent'>T</span>",
-  "<span class='responsive-text-medium accent'>U</span>",
-  "<span class='responsive-text-medium accent'>R</span>",
-  "<span class='responsive-text-medium accent'>E</span>",
+  "<span style='font-size:28px; color:#fdbb2d;'>F</span>",
+  "<span style='font-size:28px; color:#fdbb2d;'>U</span>",
+  "<span style='font-size:28px; color:#fdbb2d;'>T</span>",
+  "<span style='font-size:28px; color:#fdbb2d;'>U</span>",
+  "<span style='font-size:28px; color:#fdbb2d;'>R</span>",
+  "<span style='font-size:28px; color:#fdbb2d;'>E</span>",
   " ",
-  "<span class='responsive-text-medium'>I</span>",
-  "<span class='responsive-text-medium'>S</span>",
+  "<span style='font-size:28px;'>I</span>",
+  "<span style='font-size:28px;'>S</span>",
   " ",
-  "<span class='responsive-text-medium'>C</span>",
-  "<span class='responsive-text-medium'>R</span>",
-  "<span class='responsive-text-medium'>E</span>",
-  "<span class='responsive-text-medium'>A</span>",
-  "<span class='responsive-text-medium'>T</span>",
-  "<span class='responsive-text-medium'>E</span>",
-  "<span class='responsive-text-medium'>D</span>",
+  "<span style='font-size:28px;'>C</span>",
+  "<span style='font-size:28px;'>R</span>",
+  "<span style='font-size:28px;'>E</span>",
+  "<span style='font-size:28px;'>A</span>",
+  "<span style='font-size:28px;'>T</span>",
+  "<span style='font-size:28px;'>E</span>",
+  "<span style='font-size:28px;'>D</span>",
   " ",
-  "<span class='responsive-text-medium'>B</span>",
-  "<span class='responsive-text-medium'>Y</span>",
+  "<span style='font-size:28px;'>B</span>",
+  "<span style='font-size:28px;'>Y</span>",
   " ",
-  "<span class='responsive-text-medium'>W</span>",
-  "<span class='responsive-text-medium'>H</span>",
-  "<span class='responsive-text-medium'>A</span>",
-  "<span class='responsive-text-medium'>T</span>",
+  "<span style='font-size:28px;'>W</span>",
+  "<span style='font-size:28px;'>H</span>",
+  "<span style='font-size:28px;'>A</span>",
+  "<span style='font-size:28px;'>T</span>",
   "<br>",
-  "<span class='responsive-text-large'>Y</span>",
-  "<span class='responsive-text-large'>O</span>",
-  "<span class='responsive-text-large'>U</span>",
+  "<span style='font-size:60px;'>Y</span>",
+  "<span style='font-size:60px;'>O</span>",
+  "<span style='font-size:60px;'>U</span>",
   " ",
-  "<span class='responsive-text-large'>D</span>",
-  "<span class='responsive-text-large'>O</span>",
+  "<span style='font-size:60px;'>D</span>",
+  "<span style='font-size:60px;'>O</span>",
   " ",
-  "<span class='responsive-text-xlarge accent'>{</span>",
+  "<span style='font-size:90px; color:#fdbb2d;'>{</span>",
   " ",
-  "<span class='responsive-text-xlarge'>T</span>",
-  "<span class='responsive-text-xlarge'>O</span>",
-  "<span class='responsive-text-xlarge'>D</span>",
-  "<span class='responsive-text-xlarge'>A</span>",
-  "<span class='responsive-text-xlarge'>Y</span>",
+  "<span style='font-size:80px;'>T</span>",
+  "<span style='font-size:80px;'>O</span>",
+  "<span style='font-size:80px;'>D</span>",
+  "<span style='font-size:80px;'>A</span>",
+  "<span style='font-size:80px;'>Y</span>",
   " ",
-  "<span class='responsive-text-xlarge accent'>}</span>",
+  "<span style='font-size:90px; color:#fdbb2d;'>}</span>",
   "<br>",
-  "<span class='responsive-text-medium line-through'>N</span>",
-  "<span class='responsive-text-medium line-through'>O</span>",
-  "<span class='responsive-text-medium line-through'>T</span>",
+  "<span style='font-size:28px; text-decoration: line-through;'>N</span>",
+  "<span style='font-size:28px; text-decoration: line-through;'>O</span>",
+  "<span style='font-size:28px; text-decoration: line-through;'>T</span>",
   " ",
-  "<span class='responsive-text-medium faded'>T</span>",
-  "<span class='responsive-text-medium faded'>O</span>",
-  "<span class='responsive-text-medium faded'>M</span>",
-  "<span class='responsive-text-medium faded'>O</span>",
-  "<span class='responsive-text-medium faded'>R</span>",
-  "<span class='responsive-text-medium faded'>R</span>",
-  "<span class='responsive-text-medium faded'>O</span>",
-  "<span class='responsive-text-medium faded'>W</span>",
+  "<span style='font-size:28px; color: grey; opacity: 0.5;'>T</span>",
+  "<span style='font-size:28px; color: grey; opacity: 0.5;'>O</span>",
+  "<span style='font-size:28px; color: grey; opacity: 0.5;'>M</span>",
+  "<span style='font-size:28px; color: grey; opacity: 0.5;'>O</span>",
+  "<span style='font-size:28px; color: grey; opacity: 0.5;'>R</span>",
+  "<span style='font-size:28px; color: grey; opacity: 0.5;'>R</span>",
+  "<span style='font-size:28px; color: grey; opacity: 0.5;'>O</span>",
+  "<span style='font-size:28px; color: grey; opacity: 0.5;'>W</span>",
   ".", "”"
 ];
 
@@ -612,69 +581,18 @@ function typeLetter() {
     }
 }
 
-// Add responsive text classes to head
-const style = document.createElement('style');
-style.innerHTML = `
-    .responsive-text-medium {
-        font-size: 28px;
-    }
-    .responsive-text-large {
-        font-size: 60px;
-    }
-    .responsive-text-xlarge {
-        font-size: 80px;
-    }
-    .accent {
-        color: #fdbb2d;
-    }
-    .line-through {
-        text-decoration: line-through;
-    }
-    .faded {
-        color: grey;
-        opacity: 0.5;
-    }
-    @media (max-width: 992px) {
-        .responsive-text-medium {
-            font-size: 24px;
-        }
-        .responsive-text-large {
-            font-size: 50px;
-        }
-        .responsive-text-xlarge {
-            font-size: 60px;
-        }
-    }
-    @media (max-width: 768px) {
-        .responsive-text-medium {
-            font-size: 20px;
-        }
-        .responsive-text-large {
-            font-size: 40px;
-        }
-        .responsive-text-xlarge {
-            font-size: 50px;
-        }
-    }
-    @media (max-width: 576px) {
-        .responsive-text-medium {
-            font-size: 16px;
-        }
-        .responsive-text-large {
-            font-size: 30px;
-        }
-        .responsive-text-xlarge {
-            font-size: 40px;
-        }
-    }
-`;
-document.head.appendChild(style);
-
 window.onload = typeLetter;
 </script>
 """, height=400)
 
-# Responsive buttons
+# # Add two buttons after the typing animation
+# col1, col2 = st.columns(2)
+# with col1:
+#     if st.button("Apply Now - Summer 2024 Intake Open!"):
+#         st.switch_page("pages/1_application.py")
+# with col2:
+#     if st.button("Access LMS Portal"):
+#         st.switch_page("pages/2_lms_portal.py")
 cols = st.columns(2)
 with cols[0]:
     if st.button("Apply Now", key="python_apply_wide", use_container_width=True):
@@ -683,13 +601,12 @@ with cols[1]:
     if st.button("LMS Login", key="ml_apply_wide", use_container_width=True):
         st.switch_page("pages/2_lms_portal.py")
 
-st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)  # Add some space
 
-# Features Section - Responsive columns
-st.markdown("<h2 style='text-align: center; margin-top: 20px; color: #fdbb2d;'>Why Choose BrightCore?</h2>", unsafe_allow_html=True)
+# Features Section
+st.markdown("<h2 style='display: flex; justify-content: center; text-align: center; margin-top: 20px; color: #fdbb2d;'>Why Choose BrightCore?</h2>", unsafe_allow_html=True)
 
-# Use columns with responsive behavior
-col1, col2, col3 = st.columns([1, 1, 1], gap="medium")
+col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown(f"""
     <div class="feature-card">
@@ -720,24 +637,24 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
-# Stats Section - Responsive
+# Stats Section
 st.markdown("<h2 style='text-align: center; margin-top: 50px; color: #fdbb2d;'>Our Impact in Numbers</h2>", unsafe_allow_html=True)
 
 counters_html = """
 <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; margin: 40px 0;">
-  <div class="stats-card" style="text-align: center; min-width: 150px; flex: 1; padding: 20px;">
+  <div class="stats-card" style="text-align: center; width: 200px; padding: 30px 20px;">
     <h3 style="color: #fdbb2d; font-size: 2.5rem; margin: 0;"><span id="count1">0</span>+</h3>
     <p style="font-size: 1.1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Interns Trained</p>
   </div>
-  <div class="stats-card" style="text-align: center; min-width: 150px; flex: 1; padding: 20px;">
+  <div class="stats-card" style="text-align: center; width: 200px; padding: 30px 20px;">
     <h3 style="color: #fdbb2d; font-size: 2.5rem; margin: 0;"><span id="count2">0</span>%</h3>
     <p style="font-size: 1.1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Placement Rate</p>
   </div>
-  <div class="stats-card" style="text-align: center; min-width: 150px; flex: 1; padding: 20px;">
+  <div class="stats-card" style="text-align: center; width: 200px; padding: 30px 20px;">
     <h3 style="color: #fdbb2d; font-size: 2.5rem; margin: 0;"><span id="count3">0</span>+</h3>
     <p style="font-size: 1.1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Countries</p>
   </div>
-  <div class="stats-card" style="text-align: center; min-width: 150px; flex: 1; padding: 20px;">
+  <div class="stats-card" style="text-align: center; width: 200px; padding: 30px 20px;">
     <h3 style="color: #fdbb2d; font-size: 2.5rem; margin: 0;"><span id="count4">0</span>+</h3>
     <p style="font-size: 1.1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Partner Companies</p>
   </div>
@@ -769,7 +686,7 @@ window.onload = function() {
 
 components.html(counters_html, height=200)
 
-# Testimonials - Responsive columns
+# Testimonials
 st.markdown("<h2 style='text-align: center; color: #fdbb2d;'>What Our Students Say</h2>", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
@@ -790,12 +707,12 @@ with col2:
     """, unsafe_allow_html=True)
 
 # -------------------------------
-# ABOUT SECTION - Responsive
+# ABOUT SECTION
 # -------------------------------
 st.markdown('<div id="about"></div>', unsafe_allow_html=True)
 st.markdown("<h1 style='color: #fdbb2d;'>About BrightCore</h1>", unsafe_allow_html=True)
 
-col1, col2 = st.columns([1, 1], gap="medium")
+col1, col2 = st.columns(2)
 with col1:
     st.markdown("""
     <p style="font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.8);">
@@ -828,68 +745,78 @@ if lottie_services:
     st_lottie(lottie_services, height=300, key="about")
 
 # -------------------------------
-# COURSES SECTION - Responsive
+# COURSES SECTION
 # -------------------------------
 st.markdown('<div id="courses"></div>', unsafe_allow_html=True)
 st.markdown("<h1 style='color: #fdbb2d;'>Our Courses</h1>", unsafe_allow_html=True)
 
-# Responsive course cards
-rows = [
-    ("🐍 Python Developer", "rgba(30,42,120,0.7)", "white", "python_dev"),
-    ("🤖 Machine Learning", "rgba(38,50,56,0.7)", "white", "ml_dev")
-]
+col1, col2 = st.columns(2)
 
-descriptions = [
-    "Python fundamentals & OOP, API development, automation, and error handling.",
-    "Supervised/unsupervised learning, scikit-learn, feature engineering."
-]
+with col1:
+    st.markdown("""
+    <div class="custom-card" style="background: linear-gradient(135deg, rgba(30,42,120,0.7), rgba(178,31,31,0.7));">
+        <h2>🐍 Python Developer</h2>
+        <p><strong>Duration:</strong> 3 months</p>
+        <ul>
+            <li>Python fundamentals & OOP</li>
+            <li>API development with Flask/Django</li>
+            <li>Automation & scripting</li>
+            <li>Testing & debugging</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("Apply Now", key="python_apply"):
+        st.switch_page("pages/1_application.py")
 
-for i in range(0, len(rows), 2):
-    cols = st.columns(2)
-    for j in range(2):
-        if i + j < len(rows):
-            title, bg, btn_color, key = rows[i + j]
-            desc = descriptions[i + j]
-            with cols[j]:
-                st.markdown(f"""
-                <div class="custom-card" style="background: {bg};">
-                    <h2>{title}</h2>
-                    <p><strong>Duration:</strong> 3 months</p>
-                    <p>{desc}</p>
-                </div>
-                """, unsafe_allow_html=True)
-                
-                if st.button("Apply Now", key=f"{key}_apply", use_container_width=True):
-                    st.switch_page("pages/1_application.py")
+with col2:
+    st.markdown("""
+    <div class="custom-card" style="background: linear-gradient(135deg, rgba(38,50,56,0.7), rgba(253,187,45,0.7));">
+        <h2>🤖 Machine Learning</h2>
+        <p><strong>Duration:</strong> 3 months</p>
+        <ul>
+            <li>Supervised & unsupervised learning</li>
+            <li>Model building with scikit-learn</li>
+            <li>Feature engineering</li>
+            <li>Model evaluation</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("Apply Now", key="ml_apply"):
+        st.switch_page("pages/1_application.py")
 
-# Course Benefits - Responsive
+# Course Benefits
 st.markdown("<h2 style='text-align: center; margin-top: 50px; color: #fdbb2d;'>Course Benefits</h2>", unsafe_allow_html=True)
 
 if lottie_learning:
     st_lottie(lottie_learning, height=300, key="learning")
+else:
+    st.image(get_image(IMAGE_URLS["success"], "success"), use_container_width=True)
 
-# Responsive benefits layout
-benefits = [
-    ("🎯", "Project-Based Learning", "Work on real-world projects for your portfolio"),
-    ("👨‍💻", "Live Mentorship", "Weekly 1:1 sessions with experts"),
-    ("📜", "Certification", "Earn a recognized certificate"),
-    ("💼", "Job Placement", "Access to partner companies")
-]
+benefits_col1, benefits_col2 = st.columns(2)
+with benefits_col1:
+    st.markdown("""
+    <div class="custom-card">
+        <h3>🎯 Project-Based Learning</h3>
+        <p>Work on real-world projects that you can add to your portfolio</p>
+        <h3>👨‍💻 Live Mentorship</h3>
+        <p>Weekly 1:1 sessions with industry experts</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-# Create responsive columns for benefits
-cols = st.columns(2)
-for i, (icon, title, desc) in enumerate(benefits):
-    with cols[i % 2]:
-        st.markdown(f"""
-        <div class="custom-card" style="text-align: center;">
-            <h1 style="font-size: 2.5rem; margin: 0; color: #fdbb2d;">{icon}</h1>
-            <h3 style="color: white;">{title}</h3>
-            <p style="color: rgba(255,255,255,0.8);">{desc}</p>
-        </div>
-        """, unsafe_allow_html=True)
+with benefits_col2:
+    st.markdown("""
+    <div class="custom-card">
+        <h3>📜 Certification</h3>
+        <p>Earn a recognized certificate upon completion</p>
+        <h3>💼 Job Placement</h3>
+        <p>Access to our partner companies for job opportunities</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # -------------------------------
-# PROGRAMS SECTION - Responsive
+# PROGRAMS SECTION
 # -------------------------------
 st.markdown('<div id="programs"></div>', unsafe_allow_html=True)
 st.markdown("<h1 style='color: #fdbb2d;'>Our Internship Programs</h1>", unsafe_allow_html=True)
@@ -916,7 +843,6 @@ descriptions = [
     "Network security, vulnerabilities, ethical hacking, security tools."
 ]
 
-# Responsive program cards
 for i in range(0, len(rows), 2):
     cols = st.columns(2)
     for j in range(2):
@@ -931,21 +857,20 @@ for i in range(0, len(rows), 2):
                 </div>
                 """, unsafe_allow_html=True)
                 
-                if st.button("Apply Now", key=f"{key}_apply", use_container_width=True):
+                if st.button("Apply Now", key=f"{key}_apply"):
                     st.switch_page("pages/1_application.py")
 
-# Program Highlights - Responsive
+# Program Highlights
 st.markdown("<h2 style='text-align: center; margin-top: 50px; color: #fdbb2d;'>Program Highlights</h2>", unsafe_allow_html=True)
 
 highlights = [
-    ("📅", "Flexible Duration", "Choose between 1-6 month programs"),
-    ("👥", "Small Batch Sizes", "Limited to 15 students per batch"),
-    ("💻", "Remote Friendly", "Learn from anywhere online"),
-    ("🏆", "Hackathons", "Regular coding competitions")
+    ("📅", "Flexible Duration", "Choose between 1-6 month programs based on your availability"),
+    ("👥", "Small Batch Sizes", "Limited to 15 students per batch for personalized attention"),
+    ("💻", "Remote Friendly", "Learn from anywhere with our online platform"),
+    ("🏆", "Hackathons", "Regular coding competitions with exciting prizes")
 ]
 
-# Create responsive columns for highlights
-cols = st.columns([1, 1, 1, 1])
+cols = st.columns(4)
 for i, (icon, title, desc) in enumerate(highlights):
     with cols[i]:
         st.markdown(f"""
@@ -957,12 +882,12 @@ for i, (icon, title, desc) in enumerate(highlights):
         """, unsafe_allow_html=True)
 
 # -------------------------------
-# CONTACT SECTION - Responsive
+# CONTACT SECTION
 # -------------------------------
 st.markdown('<div id="contact"></div>', unsafe_allow_html=True)
 st.markdown("<h1 style='color: #fdbb2d;'>Get In Touch</h1>", unsafe_allow_html=True)
 
-col1, col2 = st.columns([1, 1], gap="medium")
+col1, col2 = st.columns(2)
 
 with col1:
     st.markdown("""
@@ -985,7 +910,7 @@ with col2:
         name = st.text_input("Your Name", placeholder="Enter your name")
         email = st.text_input("Your Email", placeholder="Enter your email address")
         message = st.text_area("Your Message", placeholder="Type your message here...")
-        submitted = st.form_submit_button("Send Message", use_container_width=True)
+        submitted = st.form_submit_button("Send Message")
         if submitted:
             if name and email and message:
                 st.success("Thank you for your message! We'll get back to you soon.")
@@ -994,10 +919,5 @@ with col2:
 
 if lottie_contact:
     st_lottie(lottie_contact, height=300, key="contact")
-
-# Footer
-st.markdown("""
-<div style="text-align: center; margin-top: 50px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 8px;">
-    <p style="color: rgba(255,255,255,0.6);">© 2023 BrightCore. All rights reserved.</p>
-</div>
-""", unsafe_allow_html=True)
+else:
+    st.image(get_image(IMAGE_URLS["team"], "team"), use_container_width=True)
