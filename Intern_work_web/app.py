@@ -614,6 +614,22 @@ st.markdown(
 
 # [Rest of your existing code remains exactly the same...]
 # Typing animation HTML
+st.markdown("""
+<style>
+/* Mobile-only adjustments */
+@media (max-width: 768px) {
+    #typed-text {
+        margin-bottom: 80px !important;  /* extra space for buttons */
+    }
+
+    .element-container:has(button) {
+        margin-top: 60px !important;  /* pushes buttons down */
+    }
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 components.html("""
 <div style="display: flex; justify-content: center; margin-top: 0px; margin-bottom: -350px">
   <div id="typed-text" style="
