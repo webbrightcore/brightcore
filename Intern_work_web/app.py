@@ -5,17 +5,6 @@ import requests
 from PIL import Image
 from io import BytesIO
 import json
-from fastapi import FastAPI
-from mangum import Mangum
-
-app = FastAPI()
-
-@app.get("/")
-def home():
-    return {"message": "Hello from FastAPI!"}
-
-# Netlify requires this handler
-handler = Mangum(app)
 
 # -------------------------------
 # Page Config
