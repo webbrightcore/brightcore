@@ -521,21 +521,20 @@ inject_custom_css()
 # -------------------------------
 st.markdown("""
 <style>
-/* Remove default Streamlit padding on mobile */
-@media (max-width: 768px) {
-    .main, .block-container {
-        padding-top: 0 !important;
-    }
+/* Remove default Streamlit top padding for all screen sizes */
+.block-container, .main {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
 }
 
-/* Remove horizontal scroll */
+/* Prevent horizontal scroll */
 html, body, .stApp {
     overflow-x: hidden;
     margin: 0;
     padding: 0;
 }
 
-/* Navbar title */
+/* Title styles */
 .navbar-title {
     font-size: 2rem;
     font-weight: 800;
@@ -545,7 +544,7 @@ html, body, .stApp {
     align-items: center;
     gap: 10px;
     text-transform: uppercase;
-    margin: 0 0 10px 0; /* Remove top margin completely */
+    margin: 0 0 10px 0;
 }
 
 /* Nav links row */
@@ -571,26 +570,25 @@ html, body, .stApp {
     transition: all 0.3s ease;
 }
 
-/* Hover and active */
+/* Hover and active states */
 .navbar-link.active,
 .navbar-link:hover {
     background-color: #fdbb2d;
     color: #000;
 }
 
-/* Mobile tweaks */
+/* Mobile responsiveness */
 @media (max-width: 768px) {
     .navbar-title {
         font-size: 1.6rem;
     }
-
     .navbar-links {
         justify-content: flex-start;
     }
 }
 </style>
 
-<!-- Render title and nav inline without extra container -->
+<!-- Render the navbar -->
 <h1 class="navbar-title">BrightCore</h1>
 <div class="navbar-links">
     <a href="#home" class="navbar-link active">🏠 Home</a>
