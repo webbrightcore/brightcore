@@ -526,7 +526,7 @@ html, body, .stApp {
     overflow-x: hidden;
 }
 
-/* Simple row-style layout */
+/* Title styling */
 .navbar-title {
     font-size: 2rem;
     font-weight: 800;
@@ -534,10 +534,11 @@ html, body, .stApp {
     margin: 0 10px 0 0;
     text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     display: flex;
-    margin-top: -110px;
+    margin-top: -80px; /* Works well for desktop */
     align-items: center;
     gap: 10px;
     margin-bottom:10px;
+    text-transform: uppercase;
 }
 
 /* Nav links row */
@@ -570,7 +571,7 @@ html, body, .stApp {
     color: #000;
 }
 
-/* Stack on small screens */
+/* Small screen adjustments */
 @media (max-width: 768px) {
     .navbar-links {
         flex-direction: row;
@@ -579,6 +580,7 @@ html, body, .stApp {
 
     .navbar-title {
         font-size: 1.6rem;
+        margin-top: 0px; /* <-- Fix: removes excess top space on mobile */
         margin-bottom: 8px;
     }
 }
