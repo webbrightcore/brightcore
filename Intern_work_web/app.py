@@ -521,24 +521,31 @@ inject_custom_css()
 # -------------------------------
 st.markdown("""
 <style>
-/* Prevent horizontal scroll */
-html, body, .stApp {
-    overflow-x: hidden;
+/* Remove default Streamlit padding on mobile */
+@media (max-width: 768px) {
+    .main, .block-container {
+        padding-top: 0 !important;
+    }
 }
 
-/* Title styling */
+/* Remove horizontal scroll */
+html, body, .stApp {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar title */
 .navbar-title {
     font-size: 2rem;
     font-weight: 800;
     color: #fdbb2d;
-    margin: 0 10px 0 0;
     text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     display: flex;
-    margin-top: -80px; /* Works well for desktop */
     align-items: center;
     gap: 10px;
-    margin-bottom:10px;
     text-transform: uppercase;
+    margin: 0 0 10px 0; /* Remove top margin completely */
 }
 
 /* Nav links row */
@@ -546,11 +553,11 @@ html, body, .stApp {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 10px;
     align-items: center;
+    margin-top: 0;
 }
 
-/* Individual links */
+/* Individual nav link */
 .navbar-link {
     padding: 6px 16px;
     color: rgba(255, 255, 255, 0.9);
@@ -564,29 +571,26 @@ html, body, .stApp {
     transition: all 0.3s ease;
 }
 
-/* Active & hover */
+/* Hover and active */
 .navbar-link.active,
 .navbar-link:hover {
     background-color: #fdbb2d;
     color: #000;
 }
 
-/* Small screen adjustments */
+/* Mobile tweaks */
 @media (max-width: 768px) {
-    .navbar-links {
-        flex-direction: row;
-        justify-content: flex-start;
-    }
-
     .navbar-title {
         font-size: 1.6rem;
-        margin-top: 0px; /* <-- Fix: removes excess top space on mobile */
-        margin-bottom: 8px;
+    }
+
+    .navbar-links {
+        justify-content: flex-start;
     }
 }
 </style>
 
-<!-- No container div, inline structure -->
+<!-- Render title and nav inline without extra container -->
 <h1 class="navbar-title">BrightCore</h1>
 <div class="navbar-links">
     <a href="#home" class="navbar-link active">🏠 Home</a>
@@ -595,10 +599,6 @@ html, body, .stApp {
     <a href="#programs" class="navbar-link">💼 Programs</a>
     <a href="#contact" class="navbar-link">📞 Contact</a>
 </div>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-    <hr style='margin-top: 10px; margin-bottom: 10px;'>
 """, unsafe_allow_html=True)
 
 # Set page background
