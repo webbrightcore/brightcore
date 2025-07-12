@@ -526,93 +526,77 @@ html, body, .stApp {
     overflow-x: hidden;
 }
 
-/* Responsive navbar */
-.navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 10px 5%;
-    margin: -6rem -1rem 15px -1rem;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: transparent;
-}
-
+/* Simple row-style layout */
 .navbar-title {
-    margin: 0;
     font-size: 2rem;
     font-weight: 800;
+    color: #fdbb2d;
+    margin: 0 10px 0 0;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     display: flex;
+    margin-top: -80px;
     align-items: center;
     gap: 10px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    color: #fdbb2d;
+    margin-bottom:10px;
 }
 
-/* Container for the links */
+/* Nav links row */
 .navbar-links {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: flex-end;
-    flex-grow: 1;
     margin-top: 10px;
+    align-items: center;
 }
 
-/* Each nav link */
+/* Individual links */
 .navbar-link {
     padding: 6px 16px;
     color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s ease;
     font-size: 0.9rem;
     white-space: nowrap;
     border-radius: 50px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    background: none;
+    transition: all 0.3s ease;
 }
 
+/* Active & hover */
 .navbar-link.active,
 .navbar-link:hover {
     background-color: #fdbb2d;
     color: #000;
 }
 
+/* Stack on small screens */
 @media (max-width: 768px) {
-    .navbar-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
     .navbar-links {
+        flex-direction: row;
         justify-content: flex-start;
-        margin-top: 10px;
     }
 
     .navbar-title {
         font-size: 1.6rem;
+        margin-bottom: 8px;
     }
 }
 </style>
 
-<div class="navbar-container">
-    <h1 class="navbar-title">BrightCore</h1>
-    <div class="navbar-links">
-        <a href="#home" class="navbar-link active">🏠 Home</a>
-        <a href="#about" class="navbar-link">ℹ️ About</a>
-        <a href="#courses" class="navbar-link">🎓 Courses</a>
-        <a href="#programs" class="navbar-link">💼 Programs</a>
-        <a href="#contact" class="navbar-link">📞 Contact</a>
-    </div>
+<!-- No container div, inline structure -->
+<h1 class="navbar-title">BrightCore</h1>
+<div class="navbar-links">
+    <a href="#home" class="navbar-link active">🏠 Home</a>
+    <a href="#about" class="navbar-link">ℹ️ About</a>
+    <a href="#courses" class="navbar-link">🎓 Courses</a>
+    <a href="#programs" class="navbar-link">💼 Programs</a>
+    <a href="#contact" class="navbar-link">📞 Contact</a>
 </div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
-    <hr style='margin-top: -10px; margin-bottom: 20px;'>
+    <hr style='margin-top: 10px; margin-bottom: 10px;'>
 """, unsafe_allow_html=True)
 
 # Set page background
