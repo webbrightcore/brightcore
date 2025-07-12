@@ -534,7 +534,7 @@ html, body, .stApp {
     margin: 0 10px 0 0;
     text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     display: flex;
-    margin-top: -80px;
+    margin-top: -110px;
     align-items: center;
     gap: 10px;
     margin-bottom:10px;
