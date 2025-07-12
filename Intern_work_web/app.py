@@ -520,18 +520,95 @@ inject_custom_css()
 # Navigation Bar
 # -------------------------------
 st.markdown("""
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 10px 5%; margin: -6rem -1rem 15px -1rem; position: sticky; top: 0; z-index: 1000;">
-        <h1 style="margin: 0; font-size: 2rem; font-weight: 800; display: flex; align-items: center; gap: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); color: #fdbb2d;">
-            BrightCore
-        </h1>
-        <div style="display: flex; gap: 10px;">
-            <a href="#home" style="padding: 6px 16px; color: rgba(255, 255, 255, 0.9); text-decoration: none; font-weight: 600; transition: all 0.3s ease; font-size: 0.9rem; position: relative; white-space: nowrap; border-radius: 50px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1);" class="active">🏠 Home</a>
-            <a href="#about" style="padding: 6px 16px; color: rgba(255, 255, 255, 0.9); text-decoration: none; font-weight: 600; transition: all 0.3s ease; font-size: 0.9rem; position: relative; white-space: nowrap; border-radius: 50px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1);">ℹ️ About</a>
-            <a href="#courses" style="padding: 6px 16px; color: rgba(255, 255, 255, 0.9); text-decoration: none; font-weight: 600; transition: all 0.3s ease; font-size: 0.9rem; position: relative; white-space: nowrap; border-radius: 50px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1);">🎓 Courses</a>
-            <a href="#programs" style="padding: 6px 16px; color: rgba(255, 255, 255, 0.9); text-decoration: none; font-weight: 600; transition: all 0.3s ease; font-size: 0.9rem; position: relative; white-space: nowrap; border-radius: 50px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1);">💼 Programs</a>
-            <a href="#contact" style="padding: 6px 16px; color: rgba(255, 255, 255, 0.9); text-decoration: none; font-weight: 600; transition: all 0.3s ease; font-size: 0.9rem; position: relative; white-space: nowrap; border-radius: 50px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1);">📞 Contact</a>
-        </div>
+<style>
+/* Prevent horizontal scroll */
+html, body, .stApp {
+    overflow-x: hidden;
+}
+
+/* Responsive navbar */
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px 5%;
+    margin: -6rem -1rem 15px -1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: transparent;
+}
+
+.navbar-title {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    color: #fdbb2d;
+}
+
+/* Container for the links */
+.navbar-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+    flex-grow: 1;
+    margin-top: 10px;
+}
+
+/* Each nav link */
+.navbar-link {
+    padding: 6px 16px;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-link.active,
+.navbar-link:hover {
+    background-color: #fdbb2d;
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-links {
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+
+    .navbar-title {
+        font-size: 1.6rem;
+    }
+}
+</style>
+
+<div class="navbar-container">
+    <h1 class="navbar-title">BrightCore</h1>
+    <div class="navbar-links">
+        <a href="#home" class="navbar-link active">🏠 Home</a>
+        <a href="#about" class="navbar-link">ℹ️ About</a>
+        <a href="#courses" class="navbar-link">🎓 Courses</a>
+        <a href="#programs" class="navbar-link">💼 Programs</a>
+        <a href="#contact" class="navbar-link">📞 Contact</a>
     </div>
+</div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
