@@ -721,13 +721,14 @@ window.onload = typeLetter;
 """, height=400)
 
 # Buttons below animationcols = st.columns(2)
+cols = st.columns(2)
 with cols[0]:
-    if st.button("Apply Now", key="apply", use_container_width=True):
-        st.write("Apply now clicked")
+    if st.button("Apply Now", key="python_apply_wide", use_container_width=True):
+        st.switch_page("pages/1_application.py")
 with cols[1]:
-    if st.button("LMS Login", key="login", use_container_width=True):
-        st.write("LMS login clicked")
-
+    if st.button("LMS Login", key="ml_apply_wide", use_container_width=True):
+        st.switch_page("pages/2_lms_portal.py")
+        
 # Features Section
 st.markdown("<h2 style='display: flex; justify-content: center; text-align: center; margin-top: 20px; color: #fdbb2d;'>Why Choose BrightCore?</h2>", unsafe_allow_html=True)
 
