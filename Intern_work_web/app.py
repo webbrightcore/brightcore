@@ -77,52 +77,47 @@ def get_image(url, fallback_key):
     return FALLBACK_IMAGES[fallback_key]
 
 # -------------------------------
-# Modern CSS Theme
+# Enhanced Responsive CSS Theme
 # -------------------------------
 def inject_custom_css():
     st.markdown("""
     <style>
-        /* Remove all sidebar elements */
+        /* Base responsive settings */
         section[data-testid="stSidebar"] {
             display: none !important;
         }
         
-        /* Remove the main sidebar toggle button (hamburger) */
         button[title="View fullscreen"] {
             display: none !important;
         }
         
-        /* Remove the arrow icon (expand/collapse button) */
         div[data-testid="stToolbar"] {
             display: none !important;
         }
         
-        /* Remove the resize handle */
         div[data-testid="stDecoration"] {
             display: none !important;
         }
         
-        /* Adjust main content padding */
         .stApp {
             padding: 0 !important;
             margin: 0 !important;
         }
         
-        /* Remove Streamlit's default header/footer */
         header[data-testid="stHeader"], footer[data-testid="stFooter"] {
             display: none !important;
         }
-        /* Base Styles */
+        
         body, .stApp {
             background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             color: #e0e0e0;
             font-family: 'Segoe UI', sans-serif;
         }
         
-        /* Modern Navbar */
+        /* Responsive navbar */
         .navbar {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
             padding: 15px 5%;
             margin: -1rem -1rem 30px -1rem;
@@ -136,8 +131,8 @@ def inject_custom_css():
         }
         
         .navbar-title {
-            font-size: 2.2rem;
-            margin: 0;
+            font-size: 1.8rem;
+            margin: 0 0 15px 0;
             font-weight: 800;
             display: flex;
             align-items: center;
@@ -151,17 +146,19 @@ def inject_custom_css():
         
         .navbar-tabs {
             display: flex;
-            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
         }
         
         .navbar-tab {
-            justify-content: center;
-            padding: 8px 20px;
+            padding: 6px 15px;
             color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            font-size: 1rem;
+            font-size: 0.9rem;
             position: relative;
             white-space: nowrap;
             border-radius: 50px;
@@ -170,55 +167,11 @@ def inject_custom_css():
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .navbar-tab:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .navbar-tab.active {
-            color: white;
-            background: rgba(255, 255, 255, 0.3);
-            font-weight: 700;
-        }
-        
-        .navbar-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 3px;
-            background: white;
-            border-radius: 3px;
-        }
-        
-        /* Hero Section */
-        .hero-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 10px 40px;
-            border-radius: 16px;
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 50px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-        
+        /* Responsive hero section */
         .hero-header {
-            font-size: 3.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
             background: linear-gradient(to right, #ffffff, #f9f9f9);
             -webkit-background-clip: text;
@@ -226,197 +179,97 @@ def inject_custom_css():
         }
         
         .hero-subtitle {
-            font-size: 22px;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 30px;
-        }
-        
-        /* Cards */
-        .custom-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            margin-bottom: 25px;
-            height: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .custom-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 28px rgba(0,0,0,0.2);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-        
-        .custom-card h2 {
-            color: white;
-            margin-top: 0;
-        }
-        
-        .custom-card p {
-            color: rgba(255,255,255,0.8);
-        }
-        
-        .custom-card ul {
-            padding-left: 20px;
-            color: rgba(255,255,255,0.8);
-        }
-        
-        /* Buttons */
-        .stButton>button {
-    border-radius: 50px;
-    padding: 12px 28px;
-    font-weight: 700;
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    letter-spacing: 0.5px;
-}
-
-.stButton>button:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.stButton>button:active {
-    transform: translateY(0);
-    background: rgba(255, 255, 255, 0.05) !important;
-}
-
-.stButton>button::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.1),
-        transparent
-    );
-    transition: 0.5s;
-}
-
-.stButton>button:hover::after {
-    left: 100%;
-}
-
-/* For gold accent version (optional) */
-.stButton>button.accent {
-    color: #fdbb2d !important;
-    border-color: rgba(253, 187, 45, 0.4);
-}
-
-.stButton>button.accent:hover {
-    background: rgba(253, 187, 45, 0.1) !important;
-}
-        
-        /* Images */
-        .feature-img {
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            margin-bottom: 25px;
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-        
-        .feature-img:hover {
-            transform: scale(1.02);
-        }
-        
-        /* Testimonials */
-        .testimonial-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            margin: 25px 0;
-            border-left: 4px solid #fdbb2d;
-        }
-        
-        .testimonial-text {
-            font-style: italic;
+            font-size: 18px;
             color: rgba(255,255,255,0.9);
             margin-bottom: 20px;
         }
         
-        .testimonial-author {
-            font-weight: 700;
-            color: white;
+        /* Responsive cards */
+        .custom-card {
+            padding: 20px;
+            margin-bottom: 20px;
         }
         
-        /* Feature Cards */
-        .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            margin: 25px 0;
-            border-left: 4px solid #5f2c82;
-            transition: all 0.3s ease;
-            text-align: center;
+        .custom-card h2 {
+            font-size: 1.3rem;
         }
         
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 28px rgba(0,0,0,0.2);
-            border-color: rgba(255, 255, 255, 0.4);
+        .custom-card p, .custom-card ul {
+            font-size: 0.9rem;
         }
         
-        /* Stats */
+        /* Responsive images */
+        .feature-img {
+            height: auto;
+            max-height: 180px;
+        }
+        
+        /* Responsive buttons */
+        .stButton>button {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive stats */
         .stats-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 16px;
-            text-align: center;
-            margin: 15px 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            min-width: 150px;
+            flex: 1;
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
+        .stats-card h3 {
+            font-size: 1.8rem;
+        }
+        
+        /* Desktop styles */
+        @media (min-width: 768px) {
             .navbar {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .navbar-title {
+                font-size: 2.2rem;
+                margin: 0;
             }
             
             .navbar-tabs {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
+                flex-wrap: nowrap;
+                width: auto;
+            }
+            
+            .navbar-tab {
+                padding: 8px 20px;
+                font-size: 1rem;
             }
             
             .hero-header {
-                font-size: 2.5rem;
+                font-size: 3.5rem;
             }
             
             .hero-subtitle {
-                font-size: 18px;
+                font-size: 22px;
             }
             
             .custom-card {
-                padding: 20px;
+                padding: 30px;
+            }
+            
+            .custom-card h2 {
+                font-size: 1.5rem;
             }
             
             .feature-img {
-                height: 200px;
+                max-height: 250px;
+            }
+            
+            .stButton>button {
+                padding: 12px 28px;
+                font-size: 1rem;
+            }
+            
+            .stats-card h3 {
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -424,41 +277,21 @@ def inject_custom_css():
 inject_custom_css()
 
 # -------------------------------
-# Navigation Bar
+# Navigation Bar (Responsive)
 # -------------------------------
-col1,col2,col3 = st.columns(3)
-with col1:
-    st.markdown(
-    """
-    <h1 style='text-align: center; margin-top: -80px; color: #fdbb2d;'>
-        BrightCore
-    </h1>
-    """,
-    unsafe_allow_html=True
-)
-
-# -------------------------------
-# HOME SECTION
-# -------------------------------
-with col2:
-    st.markdown("""
-    <style>
-        .navbar-tabs {
-            margin-top: -60px;
-        }
-    </style>
+st.markdown("""
+<div class="navbar">
+    <h1 class="navbar-title">BrightCore</h1>
+    <div class="navbar-tabs">
+        <a href="#home" class="navbar-tab active">🏠 Home</a>
+        <a href="#about" class="navbar-tab">ℹ️ About Us</a>
+        <a href="#courses" class="navbar-tab">🎓 Courses</a>
+        <a href="#programs" class="navbar-tab">💼 Programs</a>
+        <a href="#contact" class="navbar-tab">📞 Contact</a>
+    </div>
+</div>
 """, unsafe_allow_html=True)
-    
-    st.markdown("""
-            <div class="navbar-tabs">
-                <a href="#home" class="navbar-tab active">🏠 Home</a>
-                <a href="#about" class="navbar-tab">ℹ️ About Us</a>
-                <a href="#courses" class="navbar-tab">🎓 Courses</a>
-                <a href="#programs" class="navbar-tab">💼 Programs</a>
-                <a href="#contact" class="navbar-tab">📞 Contact</a>
-            </div>
-        """, unsafe_allow_html=True)
-        
+
 st.markdown("""
     <hr style='margin-top: -10px; margin-bottom: 20px;'>
 """, unsafe_allow_html=True)
@@ -476,7 +309,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Typing animation HTML
+# Responsive typing animation
 components.html("""
 <div style="display: flex; justify-content: center; margin-top: 0px; margin-bottom: -350px">
   <div id="typed-text" style="
@@ -495,66 +328,66 @@ components.html("""
 const letters = [
   "“",
   "<br>",
-  "<span style='font-size:28px;'>Y</span>",
-  "<span style='font-size:28px;'>O</span>",
-  "<span style='font-size:28px;'>U</span>",
-  "<span style='font-size:28px;'>R</span>",
+  "<span class='responsive-text-medium'>Y</span>",
+  "<span class='responsive-text-medium'>O</span>",
+  "<span class='responsive-text-medium'>U</span>",
+  "<span class='responsive-text-medium'>R</span>",
   " ",
-  "<span style='font-size:28px; color:#fdbb2d;'>F</span>",
-  "<span style='font-size:28px; color:#fdbb2d;'>U</span>",
-  "<span style='font-size:28px; color:#fdbb2d;'>T</span>",
-  "<span style='font-size:28px; color:#fdbb2d;'>U</span>",
-  "<span style='font-size:28px; color:#fdbb2d;'>R</span>",
-  "<span style='font-size:28px; color:#fdbb2d;'>E</span>",
+  "<span class='responsive-text-medium accent'>F</span>",
+  "<span class='responsive-text-medium accent'>U</span>",
+  "<span class='responsive-text-medium accent'>T</span>",
+  "<span class='responsive-text-medium accent'>U</span>",
+  "<span class='responsive-text-medium accent'>R</span>",
+  "<span class='responsive-text-medium accent'>E</span>",
   " ",
-  "<span style='font-size:28px;'>I</span>",
-  "<span style='font-size:28px;'>S</span>",
+  "<span class='responsive-text-medium'>I</span>",
+  "<span class='responsive-text-medium'>S</span>",
   " ",
-  "<span style='font-size:28px;'>C</span>",
-  "<span style='font-size:28px;'>R</span>",
-  "<span style='font-size:28px;'>E</span>",
-  "<span style='font-size:28px;'>A</span>",
-  "<span style='font-size:28px;'>T</span>",
-  "<span style='font-size:28px;'>E</span>",
-  "<span style='font-size:28px;'>D</span>",
+  "<span class='responsive-text-medium'>C</span>",
+  "<span class='responsive-text-medium'>R</span>",
+  "<span class='responsive-text-medium'>E</span>",
+  "<span class='responsive-text-medium'>A</span>",
+  "<span class='responsive-text-medium'>T</span>",
+  "<span class='responsive-text-medium'>E</span>",
+  "<span class='responsive-text-medium'>D</span>",
   " ",
-  "<span style='font-size:28px;'>B</span>",
-  "<span style='font-size:28px;'>Y</span>",
+  "<span class='responsive-text-medium'>B</span>",
+  "<span class='responsive-text-medium'>Y</span>",
   " ",
-  "<span style='font-size:28px;'>W</span>",
-  "<span style='font-size:28px;'>H</span>",
-  "<span style='font-size:28px;'>A</span>",
-  "<span style='font-size:28px;'>T</span>",
+  "<span class='responsive-text-medium'>W</span>",
+  "<span class='responsive-text-medium'>H</span>",
+  "<span class='responsive-text-medium'>A</span>",
+  "<span class='responsive-text-medium'>T</span>",
   "<br>",
-  "<span style='font-size:60px;'>Y</span>",
-  "<span style='font-size:60px;'>O</span>",
-  "<span style='font-size:60px;'>U</span>",
+  "<span class='responsive-text-large'>Y</span>",
+  "<span class='responsive-text-large'>O</span>",
+  "<span class='responsive-text-large'>U</span>",
   " ",
-  "<span style='font-size:60px;'>D</span>",
-  "<span style='font-size:60px;'>O</span>",
+  "<span class='responsive-text-large'>D</span>",
+  "<span class='responsive-text-large'>O</span>",
   " ",
-  "<span style='font-size:90px; color:#fdbb2d;'>{</span>",
+  "<span class='responsive-text-xlarge accent'>{</span>",
   " ",
-  "<span style='font-size:80px;'>T</span>",
-  "<span style='font-size:80px;'>O</span>",
-  "<span style='font-size:80px;'>D</span>",
-  "<span style='font-size:80px;'>A</span>",
-  "<span style='font-size:80px;'>Y</span>",
+  "<span class='responsive-text-xlarge'>T</span>",
+  "<span class='responsive-text-xlarge'>O</span>",
+  "<span class='responsive-text-xlarge'>D</span>",
+  "<span class='responsive-text-xlarge'>A</span>",
+  "<span class='responsive-text-xlarge'>Y</span>",
   " ",
-  "<span style='font-size:90px; color:#fdbb2d;'>}</span>",
+  "<span class='responsive-text-xlarge accent'>}</span>",
   "<br>",
-  "<span style='font-size:28px; text-decoration: line-through;'>N</span>",
-  "<span style='font-size:28px; text-decoration: line-through;'>O</span>",
-  "<span style='font-size:28px; text-decoration: line-through;'>T</span>",
+  "<span class='responsive-text-medium line-through'>N</span>",
+  "<span class='responsive-text-medium line-through'>O</span>",
+  "<span class='responsive-text-medium line-through'>T</span>",
   " ",
-  "<span style='font-size:28px; color: grey; opacity: 0.5;'>T</span>",
-  "<span style='font-size:28px; color: grey; opacity: 0.5;'>O</span>",
-  "<span style='font-size:28px; color: grey; opacity: 0.5;'>M</span>",
-  "<span style='font-size:28px; color: grey; opacity: 0.5;'>O</span>",
-  "<span style='font-size:28px; color: grey; opacity: 0.5;'>R</span>",
-  "<span style='font-size:28px; color: grey; opacity: 0.5;'>R</span>",
-  "<span style='font-size:28px; color: grey; opacity: 0.5;'>O</span>",
-  "<span style='font-size:28px; color: grey; opacity: 0.5;'>W</span>",
+  "<span class='responsive-text-medium faded'>T</span>",
+  "<span class='responsive-text-medium faded'>O</span>",
+  "<span class='responsive-text-medium faded'>M</span>",
+  "<span class='responsive-text-medium faded'>O</span>",
+  "<span class='responsive-text-medium faded'>R</span>",
+  "<span class='responsive-text-medium faded'>R</span>",
+  "<span class='responsive-text-medium faded'>O</span>",
+  "<span class='responsive-text-medium faded'>W</span>",
   ".", "”"
 ];
 
@@ -570,18 +403,47 @@ function typeLetter() {
     }
 }
 
+// Add responsive text classes
+const style = document.createElement('style');
+style.innerHTML = `
+    .responsive-text-medium {
+        font-size: 20px;
+    }
+    .responsive-text-large {
+        font-size: 40px;
+    }
+    .responsive-text-xlarge {
+        font-size: 50px;
+    }
+    .accent {
+        color: #fdbb2d;
+    }
+    .line-through {
+        text-decoration: line-through;
+    }
+    .faded {
+        color: grey;
+        opacity: 0.5;
+    }
+    @media (min-width: 768px) {
+        .responsive-text-medium {
+            font-size: 28px;
+        }
+        .responsive-text-large {
+            font-size: 60px;
+        }
+        .responsive-text-xlarge {
+            font-size: 80px;
+        }
+    }
+`;
+document.head.appendChild(style);
+
 window.onload = typeLetter;
 </script>
 """, height=400)
 
-# # Add two buttons after the typing animation
-# col1, col2 = st.columns(2)
-# with col1:
-#     if st.button("Apply Now - Summer 2024 Intake Open!"):
-#         st.switch_page("pages/1_application.py")
-# with col2:
-#     if st.button("Access LMS Portal"):
-#         st.switch_page("pages/2_lms_portal.py")
+# Responsive buttons
 cols = st.columns(2)
 with cols[0]:
     if st.button("Apply Now", key="python_apply_wide", use_container_width=True):
@@ -590,12 +452,13 @@ with cols[1]:
     if st.button("LMS Login", key="ml_apply_wide", use_container_width=True):
         st.switch_page("pages/2_lms_portal.py")
 
-st.markdown("<br>", unsafe_allow_html=True)  # Add some space
+st.markdown("<br>", unsafe_allow_html=True)
 
-# Features Section
-st.markdown("<h2 style='display: flex; justify-content: center; text-align: center; margin-top: 20px; color: #fdbb2d;'>Why Choose BrightCore?</h2>", unsafe_allow_html=True)
+# Features Section (Responsive)
+st.markdown("<h2 style='text-align: center; margin-top: 20px; color: #fdbb2d;'>Why Choose BrightCore?</h2>", unsafe_allow_html=True)
 
-col1, col2, col3 = st.columns(3)
+# Responsive columns
+col1, col2, col3 = st.columns([1, 1, 1], gap="medium")
 with col1:
     st.markdown(f"""
     <div class="feature-card">
@@ -626,26 +489,26 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
-# Stats Section
+# Stats Section (Responsive)
 st.markdown("<h2 style='text-align: center; margin-top: 50px; color: #fdbb2d;'>Our Impact in Numbers</h2>", unsafe_allow_html=True)
 
 counters_html = """
-<div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; margin: 40px 0;">
-  <div class="stats-card" style="text-align: center; width: 200px; padding: 30px 20px;">
-    <h3 style="color: #fdbb2d; font-size: 2.5rem; margin: 0;"><span id="count1">0</span>+</h3>
-    <p style="font-size: 1.1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Interns Trained</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin: 40px 0;">
+  <div class="stats-card" style="text-align: center; min-width: 150px; flex: 1; padding: 20px;">
+    <h3 style="color: #fdbb2d; font-size: 1.8rem; margin: 0;"><span id="count1">0</span>+</h3>
+    <p style="font-size: 1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Interns Trained</p>
   </div>
-  <div class="stats-card" style="text-align: center; width: 200px; padding: 30px 20px;">
-    <h3 style="color: #fdbb2d; font-size: 2.5rem; margin: 0;"><span id="count2">0</span>%</h3>
-    <p style="font-size: 1.1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Placement Rate</p>
+  <div class="stats-card" style="text-align: center; min-width: 150px; flex: 1; padding: 20px;">
+    <h3 style="color: #fdbb2d; font-size: 1.8rem; margin: 0;"><span id="count2">0</span>%</h3>
+    <p style="font-size: 1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Placement Rate</p>
   </div>
-  <div class="stats-card" style="text-align: center; width: 200px; padding: 30px 20px;">
-    <h3 style="color: #fdbb2d; font-size: 2.5rem; margin: 0;"><span id="count3">0</span>+</h3>
-    <p style="font-size: 1.1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Countries</p>
+  <div class="stats-card" style="text-align: center; min-width: 150px; flex: 1; padding: 20px;">
+    <h3 style="color: #fdbb2d; font-size: 1.8rem; margin: 0;"><span id="count3">0</span>+</h3>
+    <p style="font-size: 1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Countries</p>
   </div>
-  <div class="stats-card" style="text-align: center; width: 200px; padding: 30px 20px;">
-    <h3 style="color: #fdbb2d; font-size: 2.5rem; margin: 0;"><span id="count4">0</span>+</h3>
-    <p style="font-size: 1.1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Partner Companies</p>
+  <div class="stats-card" style="text-align: center; min-width: 150px; flex: 1; padding: 20px;">
+    <h3 style="color: #fdbb2d; font-size: 1.8rem; margin: 0;"><span id="count4">0</span>+</h3>
+    <p style="font-size: 1rem; margin: 10px 0 0; color: rgba(255,255,255,0.8);">Partner Companies</p>
   </div>
 </div>
 
@@ -675,7 +538,7 @@ window.onload = function() {
 
 components.html(counters_html, height=200)
 
-# Testimonials
+# Testimonials (Responsive)
 st.markdown("<h2 style='text-align: center; color: #fdbb2d;'>What Our Students Say</h2>", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
@@ -696,12 +559,12 @@ with col2:
     """, unsafe_allow_html=True)
 
 # -------------------------------
-# ABOUT SECTION
+# ABOUT SECTION (Responsive)
 # -------------------------------
 st.markdown('<div id="about"></div>', unsafe_allow_html=True)
 st.markdown("<h1 style='color: #fdbb2d;'>About BrightCore</h1>", unsafe_allow_html=True)
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([1, 1], gap="medium")
 with col1:
     st.markdown("""
     <p style="font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.8);">
@@ -734,7 +597,7 @@ if lottie_services:
     st_lottie(lottie_services, height=300, key="about")
 
 # -------------------------------
-# COURSES SECTION
+# COURSES SECTION (Responsive)
 # -------------------------------
 st.markdown('<div id="courses"></div>', unsafe_allow_html=True)
 st.markdown("<h1 style='color: #fdbb2d;'>Our Courses</h1>", unsafe_allow_html=True)
@@ -775,13 +638,11 @@ with col2:
     if st.button("Apply Now", key="ml_apply"):
         st.switch_page("pages/1_application.py")
 
-# Course Benefits
+# Course Benefits (Responsive)
 st.markdown("<h2 style='text-align: center; margin-top: 50px; color: #fdbb2d;'>Course Benefits</h2>", unsafe_allow_html=True)
 
 if lottie_learning:
     st_lottie(lottie_learning, height=300, key="learning")
-else:
-    st.image(get_image(IMAGE_URLS["success"], "success"), use_container_width=True)
 
 benefits_col1, benefits_col2 = st.columns(2)
 with benefits_col1:
@@ -805,7 +666,7 @@ with benefits_col2:
     """, unsafe_allow_html=True)
 
 # -------------------------------
-# PROGRAMS SECTION
+# PROGRAMS SECTION (Responsive)
 # -------------------------------
 st.markdown('<div id="programs"></div>', unsafe_allow_html=True)
 st.markdown("<h1 style='color: #fdbb2d;'>Our Internship Programs</h1>", unsafe_allow_html=True)
@@ -849,7 +710,7 @@ for i in range(0, len(rows), 2):
                 if st.button("Apply Now", key=f"{key}_apply"):
                     st.switch_page("pages/1_application.py")
 
-# Program Highlights
+# Program Highlights (Responsive)
 st.markdown("<h2 style='text-align: center; margin-top: 50px; color: #fdbb2d;'>Program Highlights</h2>", unsafe_allow_html=True)
 
 highlights = [
@@ -859,24 +720,24 @@ highlights = [
     ("🏆", "Hackathons", "Regular coding competitions with exciting prizes")
 ]
 
-cols = st.columns(4)
+cols = st.columns([1, 1, 1, 1])
 for i, (icon, title, desc) in enumerate(highlights):
     with cols[i]:
         st.markdown(f"""
         <div class="custom-card" style="text-align: center;">
-            <h1 style="font-size: 2.5rem; margin: 0; color: #fdbb2d;">{icon}</h1>
+            <h1 style="font-size: 2rem; margin: 0; color: #fdbb2d;">{icon}</h1>
             <h3 style="color: white;">{title}</h3>
             <p style="color: rgba(255,255,255,0.8);">{desc}</p>
         </div>
         """, unsafe_allow_html=True)
 
 # -------------------------------
-# CONTACT SECTION
+# CONTACT SECTION (Responsive)
 # -------------------------------
 st.markdown('<div id="contact"></div>', unsafe_allow_html=True)
 st.markdown("<h1 style='color: #fdbb2d;'>Get In Touch</h1>", unsafe_allow_html=True)
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([1, 1], gap="medium")
 
 with col1:
     st.markdown("""
@@ -908,5 +769,10 @@ with col2:
 
 if lottie_contact:
     st_lottie(lottie_contact, height=300, key="contact")
-else:
-    st.image(get_image(IMAGE_URLS["team"], "team"), use_container_width=True)
+
+# Footer
+st.markdown("""
+<div style="text-align: center; margin-top: 50px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+    <p style="color: rgba(255,255,255,0.6);">© 2023 BrightCore. All rights reserved.</p>
+</div>
+""", unsafe_allow_html=True)
