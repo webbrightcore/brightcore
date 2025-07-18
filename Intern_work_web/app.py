@@ -632,7 +632,7 @@ st.markdown(
 # Typing animation HTML
 
 components.html("""
-<div id="typed-text-container" style="display: flex; justify-content: center; margin-top: 0; margin-bottom: 0;">
+<div id="typed-text-container" style="display: flex; justify-content: center; margin-top: 0; margin-bottom: 200;">
   <div id="typed-text" style="
       font-family: 'Helvetica Neue', sans-serif;
       font-weight: 700;
