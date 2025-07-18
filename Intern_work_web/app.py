@@ -718,7 +718,7 @@ function typeLetter() {
 
 window.onload = typeLetter;
 </script>
-""", height=600)
+""", height=550)
 
 # Buttons below animationcols = st.columns(2)
 cols = st.columns(2)
